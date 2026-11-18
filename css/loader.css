@@ -59,14 +59,20 @@ html.hts-loading .hts-loader{display:flex}
 .hts-bar .track{stroke:rgba(28,28,28,.15);stroke-width:5}
 .hts-bar .fill{stroke:var(--red);stroke-width:5}
 
-/* fuse spark at the tip of the progress line */
+/* fuse spark: jagged starburst at the tip of the progress line, with ringed dots around it */
 .hts-spark{opacity:0}
 .dance .hts-spark{opacity:1}
 .done .hts-spark{opacity:0;transition:opacity .15s .1s}
-.hts-spark .glow{opacity:.45;animation:hts-flicker .16s steps(2) infinite}
-.hts-bar .hts-spark .core{fill:#fff;transform-box:fill-box;transform-origin:center;animation:hts-twinkle .3s linear infinite}
-@keyframes hts-flicker{0%{opacity:.55;r:6px}100%{opacity:.25;r:4.5px}}
-@keyframes hts-twinkle{0%,100%{transform:scale(1)}50%{transform:scale(.85)}}
+.hts-bar .hts-spark path{stroke:none}
+.hts-bar .hts-spark .b1{fill:#E39A00}
+.hts-bar .hts-spark .b2{fill:#FFC21A}
+.hts-bar .hts-spark .b3{fill:#FFEC99}
+.hts-spark .burst{animation:hts-burst .22s steps(1) infinite}
+@keyframes hts-burst{0%{transform:scale(1)}33%{transform:scale(.82)}66%{transform:scale(1.08)}}
+.hts-spark .halo{transform-box:fill-box;transform-origin:center;animation:hts-halo .5s ease-in-out infinite alternate}
+@keyframes hts-halo{from{opacity:.85;transform:scale(.9)}to{opacity:1;transform:scale(1.12)}}
+.hts-spark .dot{fill:#FFD23F;stroke:#E39A00;stroke-width:.9;animation:hts-dot .6s ease-in-out infinite;animation-delay:var(--d);transform-box:fill-box;transform-origin:center}
+@keyframes hts-dot{0%,100%{opacity:0;transform:scale(.3)}45%{opacity:1;transform:scale(1)}}
 
 .hts-skip{
   position:absolute;
@@ -80,7 +86,8 @@ html.hts-loading .hts-loader{display:flex}
 @media (prefers-reduced-motion:reduce){
   .hts-left,.hts-right{opacity:1;transform:none;transition:none}
   .dance .hts-left,.dance .hts-right,.done .hts-left,.done .hts-right,.dance .hts-stream,.dance .hts-steam path,.done .hts-star{animation:none}
-  .hts-spark .glow,.hts-spark .core{animation:none}
+  .hts-spark .burst,.hts-spark .dot,.hts-spark .halo{animation:none}
+  .hts-spark .dot{opacity:1}
     .done .hts-star{transform:none}
   .dance .hts-stream{opacity:1;stroke-dasharray:none}
   .hts-loader{transition:opacity .3s}
