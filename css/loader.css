@@ -1,0 +1,78 @@
+/* ================= HTS first-visit loader ================= */
+/* Hidden unless the inline <head> script added .hts-loading (first visit this session, JS on). */
+.hts-loader{display:none}
+html.hts-loading{overflow:hidden}              /* page scroll locked while it shows */
+html.hts-loading .hts-loader{display:flex}
+
+.hts-loader{
+  position:fixed;inset:0;z-index:100;
+  height:100vh;height:100dvh;                  /* dvh: mobile browser bars can't cut it off */
+  background:var(--purple);color:var(--grey);
+  flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  cursor:pointer;overscroll-behavior:none;touch-action:none;
+  transition:transform .55s cubic-bezier(.75,0,.25,1);
+}
+.hts-loader.out{transform:translateY(-100%)}
+
+.hts-stage{position:relative;
+  width:min(320px,70vw,calc((100dvh - 150px) * 1200 / 824)); /* 320px desktop, 70vw phones; shrinks only if a landscape screen is very short */
+  aspect-ratio:1200/824}
+.hts-layer{position:absolute;inset:0;will-change:transform}
+.hts-layer img,.hts-layer svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hts-left{transform-origin:35% 97%;transform:translateX(-14%);opacity:0}
+.hts-right{transform-origin:75% 97%;transform:translateX(14%);opacity:0}
+.in .hts-left,.in .hts-right{opacity:1;transform:none;transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .2s}
+.dance .hts-left{animation:hts-bobL .84s ease-in-out infinite}
+.dance .hts-right{animation:hts-bobR .84s ease-in-out infinite}
+@keyframes hts-bobL{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2.2%) rotate(-1.2deg)}}
+@keyframes hts-bobR{0%,100%{transform:translateY(-2.2%) rotate(1.2deg)}50%{transform:translateY(0) rotate(0)}}
+.done .hts-left,.done .hts-right{animation:hts-hop .42s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hts-hop{0%{transform:none}45%{transform:translateY(-7%)}100%{transform:none}}
+
+/* tea stream (teapot layer) */
+.hts-stream{stroke:var(--grey);stroke-width:5;stroke-linecap:round;fill:none;stroke-dasharray:7 6;opacity:0}
+.dance .hts-stream{opacity:1;animation:hts-pour .35s linear infinite}
+@keyframes hts-pour{to{stroke-dashoffset:-13}}
+.done .hts-stream{opacity:0;transition:opacity .15s}
+/* steam (cup layer): gets stronger with progress via --heat */
+.hts-steam path{fill:none;stroke:#fff;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:90;stroke-dashoffset:90;opacity:0}
+.dance .hts-steam path{animation:hts-steam 1.4s ease-out infinite}
+.dance .hts-steam path:nth-child(2){animation-delay:.45s}
+.dance .hts-steam path:nth-child(3){animation-delay:.9s}
+@keyframes hts-steam{0%{stroke-dashoffset:90;opacity:0;transform:translateY(6px)}30%{opacity:var(--heat,.4)}100%{stroke-dashoffset:0;opacity:0;transform:translateY(-14px)}}
+
+/* stars pop on finish */
+.hts-star{position:absolute;width:7%;aspect-ratio:1;transform:scale(0) rotate(-30deg)}
+.done .hts-star{animation:hts-pop .4s cubic-bezier(.3,1.7,.5,1) forwards}
+.done .hts-star:nth-of-type(2){animation-delay:.06s}
+.done .hts-star:nth-of-type(3){animation-delay:.12s}
+@keyframes hts-pop{to{transform:scale(1) rotate(15deg)}}
+
+/* caption (Poppins Medium) + scribble progress.
+   Hidden until the font is ready so it never flashes in a fallback; space is reserved, so nothing jumps. */
+.hts-label{font-family:Poppins,system-ui,sans-serif;font-weight:500;font-size:15px;min-height:1.5em;text-align:center;opacity:0}
+.hts-skip{opacity:0}
+.hts-font-ready .hts-label,.hts-font-ready .hts-skip{opacity:1;transition:opacity .2s}
+.hts-bar{width:min(220px,50vw);height:18px}
+.hts-bar path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hts-bar .track{stroke:rgba(28,28,28,.15);stroke-width:5}
+.hts-bar .fill{stroke:var(--red);stroke-width:5}
+
+.hts-skip{
+  position:absolute;
+  top:calc(env(safe-area-inset-top) + 12px);right:calc(env(safe-area-inset-right) + 14px);
+  min-width:44px;min-height:44px;padding:0 18px;               /* touch target >= 44x44 */
+  font-family:Poppins,system-ui,sans-serif;font-weight:500;font-size:13px;
+  background:none;border:1.5px solid var(--grey);color:var(--grey);border-radius:999px;cursor:pointer}
+.hts-skip:hover{background:var(--grey);color:var(--purple)}
+.hts-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (prefers-reduced-motion:reduce){
+  .hts-left,.hts-right{opacity:1;transform:none;transition:none}
+  .dance .hts-left,.dance .hts-right,.done .hts-left,.done .hts-right,.dance .hts-stream,.dance .hts-steam path,.done .hts-star{animation:none}
+  .done .hts-star{transform:none}
+  .dance .hts-stream{opacity:1;stroke-dasharray:none}
+  .hts-loader{transition:opacity .3s}
+  .hts-loader.out{transform:none;opacity:0}
+}

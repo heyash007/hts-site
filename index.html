@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HTS chilli loader — tea time</title>
+
+<!-- First visit this session? Decide before first paint so there is no flash and scroll is locked from the start. -->
+<script>
+(function(){
+  var seen=false;
+  try{seen=sessionStorage.getItem('hts-loader-seen')==='1'}catch(e){}
+  if(!seen||/[?&]loader\b/.test(location.search))document.documentElement.classList.add('hts-loading');
+})();
+</script>
+
+<!-- Preload what the loader needs so it appears instantly -->
+<link rel="preload" as="image" href="chilli-left.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="chilli-right.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="font" href="fonts/poppins-500.woff2" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/loader.css">
+</head>
+<body>
+
+<!-- ===== LOADER (drop-in) ===== -->
+<div class="hts-loader" id="hts-loader" role="dialog" aria-modal="true" aria-label="Loading Hot Take Studios">
+  <button class="hts-skip" type="button" id="hts-skip">skip</button>
+  <div class="hts-stage">
+    <div class="hts-layer hts-left">
+      <img src="chilli-left.webp" alt="" width="1200" height="824" decoding="async">
+      <svg viewBox="0 0 1200 824" aria-hidden="true"><path class="hts-stream" d="M620 250 C622 260 621 272 624 292"/></svg>
+    </div>
+    <div class="hts-layer hts-right">
+      <svg viewBox="0 0 1200 824" aria-hidden="true" class="hts-steam">
+        <path d="M652 262 c-10 -14 10 -22 0 -36 s10 -22 0 -36"/>
+        <path d="M676 266 c-10 -14 10 -22 0 -36 s10 -22 0 -36"/>
+        <path d="M640 258 c10 -14 -10 -22 0 -36 s-10 -22 0 -36"/>
+      </svg>
+      <img src="chilli-right.webp" alt="" width="1200" height="824" decoding="async">
+    </div>
+    <svg class="hts-star" style="left:2%;top:6%" viewBox="0 0 24 24" aria-hidden="true"><path fill="#BE0000" d="M12 1l2.9 7.2L22 9l-5.6 4.8L18 22l-6-4-6 4 1.6-8.2L2 9l7.1-.8z"/></svg>
+    <svg class="hts-star" style="right:6%;top:2%" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FFD23F" stroke="#1C1C1C" stroke-width="1.2" d="M12 1l2.9 7.2L22 9l-5.6 4.8L18 22l-6-4-6 4 1.6-8.2L2 9l7.1-.8z"/></svg>
+    <svg class="hts-star" style="left:46%;top:-4%;width:5%" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 1l2.9 7.2L22 9l-5.6 4.8L18 22l-6-4-6 4 1.6-8.2L2 9l7.1-.8z"/></svg>
+  </div>
+  <div class="hts-label" id="hts-label">spilling the tea…</div>
+  <svg class="hts-bar" viewBox="0 0 220 18" aria-hidden="true">
+    <path class="track" d="M4 10 C30 4 50 15 80 9 S130 4 160 11 S200 6 216 9"/>
+    <path class="fill" id="hts-fill" d="M4 10 C30 4 50 15 80 9 S130 4 160 11 S200 6 216 9"/>
+  </svg>
+</div>
+
+<main class="page">
+  <nav class="nav"><span class="logo-slot">logo file goes here</span>
+    <ul><li>Work</li><li>Quests</li><li>Our story</li><li>Contact</li></ul></nav>
+</main>
+
+<script src="js/loader.js"></script>
+</body>
+</html>
