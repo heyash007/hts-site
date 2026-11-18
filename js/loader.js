@@ -1,5 +1,5 @@
 /* HTS first-visit loader
-   - runs only if the inline <head> script set html.hts-loading (first visit this session)
+   - plays on every page load (the inline <head> script sets html.hts-loading)
    - 3 s pour (ease-in-out progress) -> hop + stars (0.43 s) -> lift (0.55 s)  ≈ 4 s on a fast connection
    - waits for window 'load' but never longer than 6 s; progress holds at 90% until then
    - skip button, click/tap anywhere, or Esc dismisses it                                          */
@@ -9,7 +9,7 @@
   var el = document.getElementById('hts-loader');
   if (!el) { root.classList.remove('hts-loading'); return; }
 
-  var MIN = 3000, MAX = 6000, KEY = 'hts-loader-seen';
+  var MIN = 3000, MAX = 6000;
   var fill = document.getElementById('hts-fill');
   var skip = document.getElementById('hts-skip');
   var page = document.querySelector('.page');
@@ -87,7 +87,6 @@
   });
 
   if (root.classList.contains('hts-loading')) {
-    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}   // count the visit as soon as it starts
     start(pageLoad);
   }
 

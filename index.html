@@ -5,14 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>HTS chilli loader — tea time</title>
 
-<!-- First visit this session? Decide before first paint so there is no flash and scroll is locked from the start. -->
-<script>
-(function(){
-  var seen=false;
-  try{seen=sessionStorage.getItem('hts-loader-seen')==='1'}catch(e){}
-  if(!seen||/[?&]loader\b/.test(location.search))document.documentElement.classList.add('hts-loading');
-})();
-</script>
+<!-- Show the loader on every page load. Set before first paint so there is no flash and scroll is locked from the start. -->
+<script>document.documentElement.classList.add('hts-loading');</script>
 
 <!-- Preload what the loader needs so it appears instantly -->
 <link rel="preload" as="image" href="chilli-left.webp" type="image/webp" fetchpriority="high">
