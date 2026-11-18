@@ -13,6 +13,7 @@
   var fill = document.getElementById('hts-fill');
   var skip = document.getElementById('hts-skip');
   var page = document.querySelector('.page');
+  var spark = document.getElementById('hts-spark');
   var len = fill.getTotalLength();
   fill.style.strokeDasharray = len;
 
@@ -23,6 +24,8 @@
   function setP(v) {
     p = v;
     fill.style.strokeDashoffset = len * (1 - v);
+    var pt = fill.getPointAtLength(len * v);
+    spark.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
     el.style.setProperty('--heat', (0.25 + v * 0.75).toFixed(2));
   }
 

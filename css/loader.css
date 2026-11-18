@@ -54,10 +54,19 @@ html.hts-loading .hts-loader{display:flex}
 .hts-label{font-family:Poppins,system-ui,sans-serif;font-weight:500;font-size:15px;min-height:1.5em;text-align:center;opacity:0}
 .hts-skip{opacity:0}
 .hts-font-ready .hts-label,.hts-font-ready .hts-skip{opacity:1;transition:opacity .2s}
-.hts-bar{width:min(220px,50vw);height:18px}
+.hts-bar{width:min(220px,50vw);height:18px;overflow:visible}
 .hts-bar path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .hts-bar .track{stroke:rgba(28,28,28,.15);stroke-width:5}
 .hts-bar .fill{stroke:var(--red);stroke-width:5}
+
+/* fuse spark at the tip of the progress line */
+.hts-spark{opacity:0}
+.dance .hts-spark{opacity:1}
+.done .hts-spark{opacity:0;transition:opacity .15s .1s}
+.hts-spark .glow{opacity:.45;animation:hts-flicker .16s steps(2) infinite}
+.hts-bar .hts-spark .core{fill:#fff;transform-box:fill-box;transform-origin:center;animation:hts-twinkle .3s linear infinite}
+@keyframes hts-flicker{0%{opacity:.55;r:6px}100%{opacity:.25;r:4.5px}}
+@keyframes hts-twinkle{0%,100%{transform:scale(1)}50%{transform:scale(.85)}}
 
 .hts-skip{
   position:absolute;
@@ -71,7 +80,8 @@ html.hts-loading .hts-loader{display:flex}
 @media (prefers-reduced-motion:reduce){
   .hts-left,.hts-right{opacity:1;transform:none;transition:none}
   .dance .hts-left,.dance .hts-right,.done .hts-left,.done .hts-right,.dance .hts-stream,.dance .hts-steam path,.done .hts-star{animation:none}
-  .done .hts-star{transform:none}
+  .hts-spark .glow,.hts-spark .core{animation:none}
+    .done .hts-star{transform:none}
   .dance .hts-stream{opacity:1;stroke-dasharray:none}
   .hts-loader{transition:opacity .3s}
   .hts-loader.out{transform:none;opacity:0}
