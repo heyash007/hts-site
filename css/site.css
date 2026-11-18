@@ -15,6 +15,8 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--grey);background:var(-
 /* ---------- mock page behind the loader (demo only) ---------- */
 .page{min-height:100vh;min-height:100dvh;padding:28px clamp(20px,5vw,64px);display:flex;flex-direction:column}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:500;font-size:14px}
-.logo-slot{border:1.5px dashed var(--red);color:var(--red);padding:6px 12px;border-radius:6px;font-size:12px}
+.logo{display:block;line-height:0}
+.logo img{display:block;height:28px;width:auto}
+@media (max-width:600px){.logo img{height:22px}}
 .nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
 @media (max-width:600px){.nav{flex-wrap:wrap;row-gap:12px}.nav ul{gap:16px;font-size:13px}}
